@@ -1,0 +1,81 @@
+vi pod1.yml
+//To create a pod 
+kind: Pod
+apiVersion: v1
+metadata:
+  name: myfirstpod
+spec:
+  containers:
+    - name: apachecon
+      image: httpd
+      ports:
+        - containerPort: 80 
+
+//To run pod        
+kubectl apply -f pod1.yml 
+
+
+//To know pods
+kubectl get pods
+
+
+
+vi deployhttpd1.yml
+//To create deployment
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mydeployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: deployment1
+  template:
+    metadata:
+      name: testp1
+      labels:
+        name: deployment1
+    spec:
+      containers:
+        - name: c00
+          image: httpd
+          ports:
+            - containerPort: 80
+ 
+
+//To run deployment
+kubectl apply -f deployhttpd1.yml
+
+
+//To know all deployments
+kubectl get deployments
+
+
+vi service.yml
+//To create services
+kind: Service
+apiVersion: v1
+metadata:
+  name: demoservices
+spec:
+  ports:
+    - port: 8080
+      targetPort: 80
+  selector:
+    name: deployment1
+  type: LoadBalancer
+  
+ 
+//To run services 
+kubectl apply -f service.yml
+
+
+//To know services
+kubectl get services
+
+
+/*copy the ip address of the demoservices
+ 
+curl <<ip address of demoservices>>:8080
+o/p it works*/
