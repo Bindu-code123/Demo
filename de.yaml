@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appss-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: appss
+  template:
+    metadata:
+      labels:
+        app: appss
+    spec:
+      containers:
+      - name: appss
+        image: bindu2009/appss:latest
+        ports:
+        - containerPort: 80
